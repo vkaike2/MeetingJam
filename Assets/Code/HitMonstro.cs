@@ -13,13 +13,10 @@ public class HitMonstro : MonoBehaviour
         if (collision.gameObject.layer == 8)
         {
             var inimigo = collision.gameObject.GetComponent<Player>();
-            if(inimigo == null)
+            if (inimigo != null)
             {
-                Debug.Log(collision.gameObject.name);
+                inimigo.TomarDano(dano);
             }
-
-
-            inimigo.TomarDano(dano);
         }
     }
 }

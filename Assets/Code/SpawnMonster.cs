@@ -7,23 +7,50 @@ public class SpawnMonster : MonoBehaviour
     [SerializeField]
     private float coolDown;
     [SerializeField]
-    private GameObject monstro;
+    private List<GameObject> monstros;
 
-    // Update is called once per frame
+    [SerializeField]
+    private Transform spwanEsquerda;
+    [SerializeField]
+    private Transform spwanDireita;
+
+
+
+    private float checkCoolDown;
+
+    private void Start()
+    {
+        checkCoolDown = 0f;
+    }
+
     void Update()
     {
         SpawnaMonstro();
-        coolDown -= Time.deltaTime;
-
+        checkCoolDown += Time.deltaTime;
+        //Debug.Log(Random.Range(1, 3));
     }
     private void SpawnaMonstro()
     {
-        if (coolDown <= 0)
+        if (checkCoolDown >= coolDown)
         {
-            var monstroSpawnado = Instantiate(monstro, transform.position, transform.rotation);
-            coolDown = 5f;
-            int numeroAleatorio = Random.Range(1, 2);
-            monstro.GetComponent<Monstro>().IniciaComADirecao(numeroAleatorio == 1 ? 1 : -1);
+            int numeroAleatorio = Random.Range(1, 3);
+            int direcao = 0;
+            Vector2 spawn = new Vector2();
+            if (numeroAleatorio == 1)
+            {
+                direcao = 1;
+                spawn = spwanDireita.position;
+            }
+            else
+            {
+                direcao = -1;
+                spawn = spwanEsquerda.position;
+            }
+
+            var monstroSpawnado = Instantiate(monstros[Random.Range(0, monstros.Count)], spawn, transform.rotation);
+            monstroSpawnado.GetComponent<Monstro>().IniciaComADirecao(direcao);
+
+            checkCoolDown = 0f;
         }
 
     }
