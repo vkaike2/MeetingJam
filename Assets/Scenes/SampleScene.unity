@@ -5125,7 +5125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2493f80e683bdec4083b2c0a6812f4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comida: 0
+  comida: 1
 --- !u!4 &1900570399
 Transform:
   m_ObjectHideFlags: 0
@@ -5155,7 +5155,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.19257712, y: -1.1425828}
+  m_Offset: {x: -0.13745832, y: -0.9912722}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5166,7 +5166,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.86463976, y: 0.5742543}
+  m_Size: {x: 1.926403, y: 0.9910798}
   m_EdgeRadius: 0
 --- !u!1 &2002584598
 GameObject:
@@ -5515,6 +5515,8 @@ MonoBehaviour:
   impulsoPulo: 25
   velocidadeMovimento: 4
   checaChao: {fileID: 15121419}
+  totalComida: 0
+  energia: 100
   EstaAndando: 0
   vida: 5
 --- !u!4 &4671702760764937164 stripped
