@@ -6,19 +6,25 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    Animator animator;
-    Rigidbody2D rigidbody2D;
+   
     [SerializeField]
     private float impulsoPulo = 6.5f;
     [SerializeField]
     private float velocidadeMovimento = 3f;
     [SerializeField]
     private ChecaChao checaChao;
-    float dano;
-    private bool Olhandoesquerda = false;
+    [SerializeField]
+    private int totalComida = 0;
+    [SerializeField]
     private float energia = 100;
+
+    float dano;
+    Animator animator;
+    Rigidbody2D rigidbody2D;
+    private bool Olhandoesquerda = false;
     private int ANIM_ESTA_PULANDO;
     private int ANIM_ESTA_ANDANDO;
+
     [SerializeField]
     private bool EstaAndando = false;
     [SerializeField]
@@ -27,7 +33,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         ANIM_ESTA_PULANDO = Animator.StringToHash("EstaPulando");
         ANIM_ESTA_ANDANDO = Animator.StringToHash("EstaAndando");
@@ -38,6 +44,7 @@ public class Player : MonoBehaviour
         Pulo();
         VirarPersonagem();
         ChecaSeEstaNoChaoParaPular();
+        UsarComida();
 
     }
 
@@ -75,26 +82,27 @@ public class Player : MonoBehaviour
     }
     private void VirarPersonagem()
     {
-        if (Input.GetAxisRaw("Horizontal") == -1)
+        float inputHorizontal = Input.GetAxisRaw("Horizontal");
+        if (inputHorizontal == -1)
         {
             gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             animator.SetBool(ANIM_ESTA_ANDANDO, true);
 
             EstaAndando = false;
         }
-        else if (Input.GetAxisRaw("Horizontal") == 1)
+        else if (inputHorizontal == 1)
         {
             gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 
         }
 
-        if (Input.GetAxisRaw("Horizontal") == 1)
+        if (inputHorizontal == 1)
         {
             EstaAndando = true;
             animator.SetBool(ANIM_ESTA_ANDANDO, true);
         }
 
-        if (Input.GetAxisRaw("Horizontal") == 0)
+        if (inputHorizontal == 0)
         {
             EstaAndando = false;
             animator.SetBool(ANIM_ESTA_ANDANDO, false);
@@ -104,6 +112,7 @@ public class Player : MonoBehaviour
     {
         vida -= dano;
     }
+
     private void ChecaSeEstaNoChaoParaPular()
     {
         if (checaChao.EstaNoChao)
@@ -116,5 +125,21 @@ public class Player : MonoBehaviour
             animator.SetBool(ANIM_ESTA_PULANDO, true);
         }
 
+    }
+    private void UsarComida()
+    {
+        var botaoComida = Input.GetKeyDown(KeyCode.E);
+
+        if (botaoComida && totalComida > 0)
+        {
+            energia += 50f;
+            totalComida -= 1;
+        }
+        //Debug.Log(energia);
+    }
+
+    public void ObterComida(int qtd)
+    {
+        totalComida += qtd;
     }
 }
