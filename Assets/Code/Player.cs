@@ -96,6 +96,7 @@ public class Player : MonoBehaviour
         float inpAtk = Input.GetAxisRaw("Fire1");
         if (inpAtk == 1 && !animPicareta.GetBool(ANIM_ATACAR))
         {
+            energia -= energia *0.01f;
             animPicareta.SetBool(ANIM_ATACAR, true);
         }
     }
